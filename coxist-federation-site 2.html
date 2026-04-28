@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Co-Xist — The Federation of Worker Cooperatives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0b2545;
+    --navy-light: #13315c;
+    --blue: #1d4e89;
+    --steel: #4a6fa5;
+    --sky: #8da9c4;
+    --cream: #eef2f7;
+    --cream-dark: #d9e2ec;
+    --paper: #f5f8fc;
+    --ink: #0a1524;
+    --ink-soft: #2a3548;
+    --gold: #d4a84b;
+    --gold-light: #e8c26a;
+    --gold-dark: #a88530;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Fraunces', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  h1, h2, h3, h4, .display {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    color: var(--cream);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold);
+  }
+  .logo-lockup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--cream);
+  }
+  .logo-seal {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+  .logo-text-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    display: block;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  nav a {
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 8px 14px;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  @media (max-width: 700px) {
+    nav ul { display: none; }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 80px 32px 60px;
+    background: var(--navy);
+    color: var(--cream);
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-mark {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 32px;
+    display: block;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 7vw, 84px);
+    line-height: 0.95;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 .gold { color: var(--gold); font-style: italic; }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .hero-blurb {
+    font-size: 19px;
+    max-width: 720px;
+    margin: 0 auto 28px;
+    line-height: 1.5;
+    color: var(--sky);
+  }
+  .hero-blurb strong { color: var(--cream); font-weight: 600; }
+
+  /* ===== PATH CHOOSER ===== */
+  .path-section {
+    padding: 80px 32px;
+    background: var(--cream-dark);
+    position: relative;
+    z-index: 2;
+  }
+  .path-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .path-prompt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  .path-question {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 60px);
+    color: var(--navy);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .path-question .gold { color: var(--gold); font-style: italic; }
+  .path-sub {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin: 0 auto 50px;
+    font-style: italic;
+  }
+  .path-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (max-width: 700px) { .path-buttons { grid-template-columns: 1fr; } }
+
+  .path-card {
+    background: var(--cream);
+    border: 3px solid var(--navy);
+    padding: 48px 36px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: left;
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+  .path-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0 var(--gold);
+    border-color: var(--gold);
+  }
+  .path-card.selected {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--gold);
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0 var(--gold);
+  }
+  .path-card-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--blue);
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+  .path-card.selected .path-card-num { color: var(--gold); }
+  .path-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    color: var(--navy);
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+  }
+  .path-card.selected .path-card-title { color: var(--cream); }
+  .path-card-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+  .path-card.selected .path-card-desc { color: var(--sky); }
+  .path-card-arrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    color: var(--blue);
+    letter-spacing: 0.1em;
+  }
+  .path-card.selected .path-card-arrow { color: var(--gold); }
+
+  /* ===== SURVEY ===== */
+  .survey-section {
+    padding: 80px 32px;
+    background: var(--paper);
+    display: none;
+    position: relative;
+    z-index: 2;
+  }
+  .survey-section.active {
+    display: block;
+    animation: fade 0.5s ease;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .survey-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .survey-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 18px;
+    font-weight: 700;
+  }
+  .survey-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    color: var(--navy);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .survey-title .gold { color: var(--gold); font-style: italic; }
+  .survey-intro {
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 42px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* Progress bar */
+  .progress-rail {
+    height: 6px;
+    background: var(--cream-dark);
+    border: 1px solid var(--navy);
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Form questions */
+  .question-block {
+    background: var(--cream);
+    border: 2px solid var(--navy);
+    border-left: 8px solid var(--gold);
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    transition: all 0.2s;
+  }
+  .question-block:hover {
+    box-shadow: 6px 6px 0 var(--blue);
+    transform: translateX(-2px);
+  }
+  .question-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--blue);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .question-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .question-help {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  input[type="text"], input[type="email"], textarea, select {
+    width: 100%;
+    padding: 13px 16px;
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    background: var(--paper);
+    border: 2px solid var(--navy);
+    color: var(--ink);
+    transition: all 0.15s;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 4px 4px 0 var(--gold);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* Skill chips */
+  .chip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .chip {
+    display: block;
+    position: relative;
+  }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span {
+    display: block;
+    padding: 11px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: var(--paper);
+    border: 2px solid var(--navy);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    user-select: none;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .chip input:checked + span {
+    background: var(--navy);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .chip:hover span {
+    border-color: var(--blue);
+  }
+
+  /* Radio cards */
+  .radio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .radio-grid { grid-template-columns: 1fr; } }
+  .radio-card {
+    display: block;
+    position: relative;
+    cursor: pointer;
+  }
+  .radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .radio-card-inner {
+    padding: 20px 22px;
+    border: 2px solid var(--navy);
+    background: var(--paper);
+    transition: all 0.15s;
+  }
+  .radio-card input:checked + .radio-card-inner {
+    background: var(--navy);
+    color: var(--cream);
+    border-color: var(--gold);
+    box-shadow: 4px 4px 0 var(--gold);
+  }
+  .radio-card-inner:hover {
+    border-color: var(--blue);
+  }
+  .radio-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+    color: var(--navy);
+  }
+  .radio-card input:checked + .radio-card-inner .radio-card-title { color: var(--gold); }
+  .radio-card-desc {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .radio-card input:checked + .radio-card-inner .radio-card-desc { color: var(--sky); }
+
+  /* Slider */
+  .slider-wrap {
+    padding: 12px 0;
+  }
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 10px;
+  }
+  .slider-row input[type="range"] {
+    flex: 1;
+    height: 6px;
+    background: var(--cream-dark);
+    border: 1px solid var(--navy);
+    border-radius: 0;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .slider-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border: 2px solid var(--navy);
+    cursor: pointer;
+    border-radius: 0;
+  }
+  .slider-row input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border: 2px solid var(--navy);
+    cursor: pointer;
+    border-radius: 0;
+  }
+  .slider-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blue);
+    min-width: 60px;
+    text-align: right;
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    padding: 16px 36px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    background: transparent;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--gold-dark);
+  }
+  .btn-back {
+    background: transparent;
+    color: var(--blue);
+    border-color: var(--blue);
+    margin-right: 12px;
+  }
+  .btn-back:hover {
+    background: var(--blue);
+    color: var(--cream);
+  }
+  .btn-row {
+    display: flex;
+    align-items: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Result panel */
+  .result {
+    background: var(--navy);
+    color: var(--cream);
+    border: 4px solid var(--gold);
+    padding: 48px 44px;
+    margin-top: 40px;
+    display: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .result.show {
+    display: block;
+    animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .result-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .result-score-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .result-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 110px;
+    line-height: 0.85;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+  .result-score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--sky);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+  }
+  .result-bar-rail {
+    height: 12px;
+    background: var(--navy-light);
+    border: 1px solid var(--cream);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .result-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .result-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .result-title .gold { color: var(--gold); }
+  .result-msg {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    color: var(--cream);
+  }
+  .result-msg strong { color: var(--gold); }
+  .result-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 20px 24px;
+    background: rgba(141, 169, 196, 0.08);
+    border-left: 4px solid var(--gold);
+    margin-bottom: 20px;
+    color: var(--sky);
+    white-space: pre-wrap;
+    line-height: 1.8;
+  }
+  .result-cta {
+    display: inline-block;
+    padding: 14px 28px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    border: 2px solid var(--gold);
+    margin-top: 8px;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+  .result-cta:hover {
+    background: var(--cream);
+    border-color: var(--cream);
+    transform: translateY(-2px);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--navy);
+    color: var(--cream);
+    padding: 60px 32px 32px;
+    position: relative;
+    z-index: 2;
+    border-top: 3px solid var(--gold);
+    text-align: center;
+  }
+  .footer-mark {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+  }
+  .footer-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .footer-tagline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+  .footer-bottom {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(141, 169, 196, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--sky);
+    letter-spacing: 0.18em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <a href="#" class="logo-lockup">
+    <svg class="logo-seal" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#eef2f7" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="43" fill="#1d4e89"/>
+      <path d="M 72.5 25 A 32.5 32.5 0 1 0 72.5 75" fill="none" stroke="#d4a84b" stroke-width="7" stroke-linecap="round"/>
+      <line x1="34" y1="34" x2="66" y2="66" stroke="#eef2f7" stroke-width="2" stroke-linecap="round"/>
+      <line x1="66" y1="34" x2="34" y2="66" stroke="#eef2f7" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="34" cy="34" r="2.2" fill="#eef2f7"/>
+      <circle cx="50" cy="34" r="1.7" fill="#eef2f7"/>
+      <circle cx="66" cy="34" r="2.2" fill="#eef2f7"/>
+      <circle cx="34" cy="50" r="1.7" fill="#eef2f7"/>
+      <circle cx="66" cy="50" r="1.7" fill="#eef2f7"/>
+      <circle cx="34" cy="66" r="2.2" fill="#eef2f7"/>
+      <circle cx="50" cy="66" r="1.7" fill="#eef2f7"/>
+      <circle cx="66" cy="66" r="2.2" fill="#eef2f7"/>
+      <circle cx="50" cy="50" r="4.5" fill="#d4a84b" stroke="#0b2545" stroke-width="1"/>
+    </svg>
+    <div>
+      <div class="logo-text">Co-Xist</div>
+      <span class="logo-text-sub">FEDERATION OF WORKER COOPS</span>
+    </div>
+  </a>
+  <ul>
+    <li><a href="#start">Get Matched</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#federation">The Federation</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <!-- THE PRIMARY MARK -->
+    <svg class="hero-mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="94" fill="none" stroke="#eef2f7" stroke-width="2"/>
+      <circle cx="100" cy="100" r="88" fill="#1d4e89"/>
+      <path d="M 145 50 A 65 65 0 1 0 145 150" fill="none" stroke="#d4a84b" stroke-width="14" stroke-linecap="round"/>
+      <line x1="68" y1="68" x2="132" y2="132" stroke="#eef2f7" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="132" y1="68" x2="68" y2="132" stroke="#eef2f7" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="68" cy="68" r="4" fill="#eef2f7" stroke="#0b2545" stroke-width="1"/>
+      <circle cx="100" cy="68" r="3" fill="#eef2f7"/>
+      <circle cx="132" cy="68" r="4" fill="#eef2f7" stroke="#0b2545" stroke-width="1"/>
+      <circle cx="68" cy="100" r="3" fill="#eef2f7"/>
+      <circle cx="132" cy="100" r="3" fill="#eef2f7"/>
+      <circle cx="68" cy="132" r="4" fill="#eef2f7" stroke="#0b2545" stroke-width="1"/>
+      <circle cx="100" cy="132" r="3" fill="#eef2f7"/>
+      <circle cx="132" cy="132" r="4" fill="#eef2f7" stroke="#0b2545" stroke-width="1"/>
+      <circle cx="100" cy="100" r="9" fill="#d4a84b" stroke="#0b2545" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="3.5" fill="#0b2545"/>
+    </svg>
+
+    <div class="hero-tag">The Federation of Worker Cooperatives</div>
+    <h1>Built by workers. <span class="gold">Owned</span> by workers.</h1>
+    <p class="hero-blurb">
+      <strong>Co-Xist is a federation of independent worker cooperatives</strong> — a network where founders join as equal co-owners, share infrastructure and protections, and keep what they build. Two doors in. Pick yours.
+    </p>
+  </div>
+</section>
+
+<!-- ============ PATH CHOOSER ============ -->
+<section class="path-section" id="start">
+  <div class="path-inner">
+    <div class="path-prompt">Choose your path</div>
+    <h2 class="path-question">Are you a worker, or are you <span class="gold">building one?</span></h2>
+    <p class="path-sub">
+      Both paths land in the same federation — but the doors are different. Pick the one that matches where you are right now.
+    </p>
+
+    <div class="path-buttons">
+      <a href="#worker-survey" class="path-card" data-path="worker">
+        <div class="path-card-num">PATH 01</div>
+        <div class="path-card-title">I'm a Worker</div>
+        <p class="path-card-desc">
+          Engineer, designer, PM, writer, ops, sales — the people who build the actual product. You're looking for a place that won't lay you off via Slack at the next quarterly review.
+        </p>
+        <div class="path-card-arrow">TAKE THE WORKER SURVEY →</div>
+      </a>
+
+      <a href="#company-survey" class="path-card" data-path="company">
+        <div class="path-card-num">PATH 02</div>
+        <div class="path-card-title">I'm a Founder / Company</div>
+        <p class="path-card-desc">
+          Solo founder, founding team, or established company looking to transition. You want to scale without selling your soul, and you want infrastructure that doesn't take 8% equity.
+        </p>
+        <div class="path-card-arrow">TAKE THE FOUNDER SURVEY →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKER SURVEY ============ -->
+<section class="survey-section" id="worker-survey">
+  <div class="survey-inner">
+    <div class="survey-eyebrow">Path 01 · Worker Survey · ~3 minutes</div>
+    <h2 class="survey-title">Tell us about <span class="gold">your work.</span></h2>
+    <p class="survey-intro">
+      Six questions. Honest answers. The federation matches you to member companies, mentors, and projects based on what you actually bring and what you're actually looking for.
+    </p>
+
+    <div class="progress-rail"><div class="progress-fill" id="w-progress"></div></div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 01</div>
+      <div class="question-label">Who are we matching?</div>
+      <p class="question-help">Just your name and an email we can reach you at when matches come up.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <input type="text" id="w-name" placeholder="Your name" />
+        <input type="email" id="w-email" placeholder="Email address" />
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 02</div>
+      <div class="question-label">What's your primary skill set?</div>
+      <p class="question-help">Pick every area where you can ship work today. The more honest you are, the better the match.</p>
+      <div class="chip-grid" id="w-skills"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 03</div>
+      <div class="question-label">What are your three strongest skills?</div>
+      <p class="question-help">Not just things you can do — things you're genuinely <em>good</em> at. The skills you'd want to be hired for.</p>
+      <div style="display: grid; gap: 10px;">
+        <input type="text" id="w-strength-1" placeholder="1. Strongest skill (e.g. 'distributed systems architecture')" />
+        <input type="text" id="w-strength-2" placeholder="2. Second strongest" />
+        <input type="text" id="w-strength-3" placeholder="3. Third strongest" />
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 04</div>
+      <div class="question-label">What are you looking for?</div>
+      <p class="question-help">Pick the one that fits best. We'll match you to companies and projects that need exactly that.</p>
+      <div class="radio-grid">
+        <label class="radio-card">
+          <input type="radio" name="w-goal" value="full-time" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Full-time role</div>
+            <div class="radio-card-desc">Looking for a stable position at a member company with full benefits and ownership stake.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="w-goal" value="freelance" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Freelance / contract</div>
+            <div class="radio-card-desc">Project-based work across multiple member companies. Flexibility over stability.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="w-goal" value="cofounder" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Co-founder match</div>
+            <div class="radio-card-desc">Looking for technical or business co-founders to start your own member coop.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="w-goal" value="explore" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Just exploring</div>
+            <div class="radio-card-desc">Not actively job-hunting, but curious about cooperative structures and want to stay in the network.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 05</div>
+      <div class="question-label">How long have you been doing this?</div>
+      <p class="question-help">Years of professional experience in your primary discipline.</p>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="w-years" min="0" max="25" value="5" />
+          <div class="slider-value"><span id="w-years-value">5</span> yrs</div>
+        </div>
+        <div class="slider-labels">
+          <span>JUST STARTING</span>
+          <span>MID-CAREER</span>
+          <span>20+ YEARS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 06</div>
+      <div class="question-label">Why are you here?</div>
+      <p class="question-help">A line or two — what brought you to a worker cooperative federation today? We read every response.</p>
+      <textarea id="w-why" placeholder="e.g. 'Got laid off via Slack after 8 years. Done watching workers build empires they don't own.'"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <a href="#start" class="btn btn-back">← BACK</a>
+      <button id="w-submit" class="btn btn-primary">Get My Match →</button>
+    </div>
+
+    <div class="result" id="w-result">
+      <div class="result-eyebrow">YOUR FEDERATION MATCH</div>
+      <div class="result-score-row">
+        <div class="result-score" id="w-score">0%</div>
+        <div class="result-score-label">FIT INDEX</div>
+      </div>
+      <div class="result-bar-rail"><div class="result-bar-fill" id="w-bar"></div></div>
+      <h3 class="result-title" id="w-title">Welcome to the federation.</h3>
+      <p class="result-msg" id="w-msg"></p>
+      <div class="result-block" id="w-detail"></div>
+      <a href="#" class="result-cta">Request Onboarding Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPANY SURVEY ============ -->
+<section class="survey-section" id="company-survey">
+  <div class="survey-inner">
+    <div class="survey-eyebrow">Path 02 · Founder Survey · ~3 minutes</div>
+    <h2 class="survey-title">Tell us what you're <span class="gold">building.</span></h2>
+    <p class="survey-intro">
+      Seven questions. Honest answers. We match you to the right structure (single coop or full federation membership), the right operational support, and the right capital path.
+    </p>
+
+    <div class="progress-rail"><div class="progress-fill" id="f-progress"></div></div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 01</div>
+      <div class="question-label">Who are we talking to?</div>
+      <p class="question-help">Your name and the company you're building (or thinking about building).</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+        <input type="text" id="f-name" placeholder="Your name" />
+        <input type="email" id="f-email" placeholder="Email address" />
+      </div>
+      <input type="text" id="f-company" placeholder="Company / venture name (or 'TBD')" />
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 02</div>
+      <div class="question-label">What does your company actually do?</div>
+      <p class="question-help">One sentence. No jargon. If you can't say it in a sentence, that's useful information too.</p>
+      <textarea id="f-what" placeholder="e.g. 'We build inventory software for independent restaurants.'"></textarea>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 03</div>
+      <div class="question-label">Do you want to join as a single coop, or as a federation member?</div>
+      <p class="question-help">The difference is structural. Read both — the right answer depends on where you're headed.</p>
+      <div class="radio-grid">
+        <label class="radio-card">
+          <input type="radio" name="f-structure" value="coop" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Single Coop</div>
+            <div class="radio-card-desc">Your company becomes a worker cooperative — workers own and govern it. You operate independently with access to coop best practices.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-structure" value="federation" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Federation Member</div>
+            <div class="radio-card-desc">Your coop joins the Co-Xist Federation — sharing infrastructure, capital, governance, and the solidarity fund with other member coops.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-structure" value="both" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Both — eventually</div>
+            <div class="radio-card-desc">Start as a single coop, federate later when the structure makes sense. Many companies follow this path.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-structure" value="unsure" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">I need help deciding</div>
+            <div class="radio-card-desc">You want guidance on which path fits your stage and goals. We'll set up a 30-minute call.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 04</div>
+      <div class="question-label">Which worker benefits do you want to offer?</div>
+      <p class="question-help">Pick everything you'd want to provide. The federation pools these so even tiny companies can offer enterprise-grade benefits.</p>
+      <div class="chip-grid" id="f-benefits"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 05</div>
+      <div class="question-label">What operational help do you want?</div>
+      <p class="question-help">Pick everything that would actually move the needle for you. We'll quote you the right package based on your selection.</p>
+      <div class="chip-grid" id="f-ops"></div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 06</div>
+      <div class="question-label">Where are you in the journey?</div>
+      <p class="question-help">Honest stage. We don't grade you on it — we use it to recommend the right onboarding track.</p>
+      <div class="radio-grid">
+        <label class="radio-card">
+          <input type="radio" name="f-stage" value="idea" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Pre-launch</div>
+            <div class="radio-card-desc">Have an idea, maybe a prototype, no customers yet. Need foundation work.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-stage" value="mvp" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">MVP / Early Traction</div>
+            <div class="radio-card-desc">Launched, first customers, figuring out what works. Need scale support.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-stage" value="growth" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Revenue & Growth</div>
+            <div class="radio-card-desc">Established product-market fit, scaling team and customers. Need infrastructure.</div>
+          </div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="f-stage" value="transition" />
+          <div class="radio-card-inner">
+            <div class="radio-card-title">Established · Transitioning</div>
+            <div class="radio-card-desc">Profitable existing company, ready to convert to cooperative ownership.</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-num">QUESTION 07</div>
+      <div class="question-label">How big is your team today?</div>
+      <p class="question-help">Including you. Founders count.</p>
+      <div class="slider-wrap">
+        <div class="slider-row">
+          <input type="range" id="f-size" min="1" max="100" value="5" />
+          <div class="slider-value"><span id="f-size-value">5</span> ppl</div>
+        </div>
+        <div class="slider-labels">
+          <span>SOLO</span>
+          <span>SMALL TEAM</span>
+          <span>50+</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <a href="#start" class="btn btn-back">← BACK</a>
+      <button id="f-submit" class="btn btn-primary">Get My Match →</button>
+    </div>
+
+    <div class="result" id="f-result">
+      <div class="result-eyebrow">YOUR FEDERATION MATCH</div>
+      <div class="result-score-row">
+        <div class="result-score" id="f-score">0%</div>
+        <div class="result-score-label">FIT INDEX</div>
+      </div>
+      <div class="result-bar-rail"><div class="result-bar-fill" id="f-bar"></div></div>
+      <h3 class="result-title" id="f-title">Welcome to the federation.</h3>
+      <p class="result-msg" id="f-msg"></p>
+      <div class="result-block" id="f-detail"></div>
+      <a href="#" class="result-cta">Schedule Founder Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <svg class="footer-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="#eef2f7" stroke-width="1.5"/>
+    <circle cx="50" cy="50" r="43" fill="#1d4e89"/>
+    <path d="M 72.5 25 A 32.5 32.5 0 1 0 72.5 75" fill="none" stroke="#d4a84b" stroke-width="7" stroke-linecap="round"/>
+    <line x1="34" y1="34" x2="66" y2="66" stroke="#eef2f7" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="66" y1="34" x2="34" y2="66" stroke="#eef2f7" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="34" cy="34" r="2.4" fill="#eef2f7"/>
+    <circle cx="50" cy="34" r="1.8" fill="#eef2f7"/>
+    <circle cx="66" cy="34" r="2.4" fill="#eef2f7"/>
+    <circle cx="34" cy="50" r="1.8" fill="#eef2f7"/>
+    <circle cx="66" cy="50" r="1.8" fill="#eef2f7"/>
+    <circle cx="34" cy="66" r="2.4" fill="#eef2f7"/>
+    <circle cx="50" cy="66" r="1.8" fill="#eef2f7"/>
+    <circle cx="66" cy="66" r="2.4" fill="#eef2f7"/>
+    <circle cx="50" cy="50" r="5" fill="#d4a84b" stroke="#0b2545" stroke-width="1"/>
+  </svg>
+  <div class="footer-name">Co-Xist</div>
+  <div class="footer-tagline">THE FEDERATION OF WORKER COOPERATIVES</div>
+  <div class="footer-bottom">
+    MEMBER OWNED  ·  MEMBER GOVERNED  ·  EST MMXXVI
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// PATH SELECTION
+// ============================================================
+document.querySelectorAll('.path-card').forEach(card => {
+  card.addEventListener('click', (e) => {
+    document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    const path = card.dataset.path;
+    const target = path === 'worker' ? 'worker-survey' : 'company-survey';
+
+    document.querySelectorAll('.survey-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+  });
+});
+
+// ============================================================
+// SKILL CHIPS — WORKER
+// ============================================================
+const workerSkills = [
+  'JavaScript', 'TypeScript', 'Python', 'Go', 'Rust', 'Ruby', 'Java',
+  'React', 'Vue', 'Svelte', 'Next.js', 'Node.js', 'Django', 'Rails',
+  'iOS / Swift', 'Android / Kotlin', 'React Native',
+  'AWS', 'GCP', 'Azure', 'Kubernetes', 'Docker', 'Terraform',
+  'PostgreSQL', 'MongoDB', 'Redis', 'GraphQL', 'REST APIs',
+  'ML / AI', 'Data Eng', 'Analytics', 'NLP', 'Computer Vision',
+  'UX Design', 'UI Design', 'Product Design', 'Figma',
+  'Product Management', 'Agile', 'Project Mgmt',
+  'Tech Writing', 'Docs', 'Developer Relations',
+  'Security', 'DevSecOps', 'SRE',
+  'Marketing', 'Growth', 'Content', 'SEO',
+  'Sales', 'BD', 'Customer Success',
+  'Finance', 'Accounting', 'Operations'
+];
+
+const skillsGrid = document.getElementById('w-skills');
+workerSkills.forEach(s => {
+  const label = document.createElement('label');
+  label.className = 'chip';
+  label.innerHTML = `<input type="checkbox" value="${s}"><span>${s}</span>`;
+  skillsGrid.appendChild(label);
+});
+
+// ============================================================
+// SKILL CHIPS — COMPANY (BENEFITS + OPS)
+// ============================================================
+const companyBenefits = [
+  'Health insurance', 'Dental + Vision', 'Mental health',
+  'Retirement / 401(k)', 'Profit sharing', 'Equity / ownership',
+  'Paid family leave', 'Unlimited PTO', 'Sabbaticals',
+  'Remote stipends', 'Home office budget', 'Co-working access',
+  'Childcare support', 'Education budget', 'Conference budget',
+  'Disability insurance', 'Life insurance', 'Wellness stipends'
+];
+
+const companyOps = [
+  'Bookkeeping', 'Payroll', 'Tax filing', 'HR / People Ops',
+  'Legal templates', 'Contract review', 'Compliance',
+  'Fractional CFO', 'Fractional COO', 'Fractional CTO', 'Fractional CMO',
+  'Scaling support', 'Hiring assistance', 'Recruiting',
+  'AI tool creation', 'Internal tooling', 'Engineering ops',
+  'Marketing support', 'Sales ops', 'Customer support setup',
+  'Investor warm intros', 'Mentor matching', 'MVP sprint program',
+  'Cooperative transition', 'Bylaw drafting', 'Governance setup'
+];
+
+const benefitsGrid = document.getElementById('f-benefits');
+companyBenefits.forEach(b => {
+  const label = document.createElement('label');
+  label.className = 'chip';
+  label.innerHTML = `<input type="checkbox" value="${b}"><span>${b}</span>`;
+  benefitsGrid.appendChild(label);
+});
+
+const opsGrid = document.getElementById('f-ops');
+companyOps.forEach(o => {
+  const label = document.createElement('label');
+  label.className = 'chip';
+  label.innerHTML = `<input type="checkbox" value="${o}"><span>${o}</span>`;
+  opsGrid.appendChild(label);
+});
+
+// ============================================================
+// SLIDERS
+// ============================================================
+const yearsSlider = document.getElementById('w-years');
+const yearsValue = document.getElementById('w-years-value');
+yearsSlider?.addEventListener('input', () => yearsValue.textContent = yearsSlider.value);
+
+const sizeSlider = document.getElementById('f-size');
+const sizeValue = document.getElementById('f-size-value');
+sizeSlider?.addEventListener('input', () => sizeValue.textContent = sizeSlider.value);
+
+// ============================================================
+// PROGRESS TRACKING
+// ============================================================
+function updateWorkerProgress() {
+  let filled = 0;
+  const total = 6;
+  if (document.getElementById('w-name').value.trim()) filled++;
+  if (document.querySelectorAll('#w-skills input:checked').length > 0) filled++;
+  if (document.getElementById('w-strength-1').value.trim()) filled++;
+  if (document.querySelector('input[name="w-goal"]:checked')) filled++;
+  filled++; // years always has value
+  if (document.getElementById('w-why').value.trim()) filled++;
+  document.getElementById('w-progress').style.width = (filled / total * 100) + '%';
+}
+
+function updateFounderProgress() {
+  let filled = 0;
+  const total = 7;
+  if (document.getElementById('f-name').value.trim()) filled++;
+  if (document.getElementById('f-what').value.trim()) filled++;
+  if (document.querySelector('input[name="f-structure"]:checked')) filled++;
+  if (document.querySelectorAll('#f-benefits input:checked').length > 0) filled++;
+  if (document.querySelectorAll('#f-ops input:checked').length > 0) filled++;
+  if (document.querySelector('input[name="f-stage"]:checked')) filled++;
+  filled++; // size always has value
+  document.getElementById('f-progress').style.width = (filled / total * 100) + '%';
+}
+
+document.querySelectorAll('#worker-survey input, #worker-survey textarea').forEach(el => {
+  el.addEventListener('input', updateWorkerProgress);
+  el.addEventListener('change', updateWorkerProgress);
+});
+
+document.querySelectorAll('#company-survey input, #company-survey textarea').forEach(el => {
+  el.addEventListener('input', updateFounderProgress);
+  el.addEventListener('change', updateFounderProgress);
+});
+
+// ============================================================
+// WORKER MATCH SUBMIT
+// ============================================================
+document.getElementById('w-submit').addEventListener('click', () => {
+  const name = document.getElementById('w-name').value.trim() || 'friend';
+  const email = document.getElementById('w-email').value.trim();
+  const skills = Array.from(document.querySelectorAll('#w-skills input:checked')).map(i => i.value);
+  const strength1 = document.getElementById('w-strength-1').value.trim();
+  const strength2 = document.getElementById('w-strength-2').value.trim();
+  const strength3 = document.getElementById('w-strength-3').value.trim();
+  const goal = document.querySelector('input[name="w-goal"]:checked')?.value;
+  const years = parseInt(document.getElementById('w-years').value);
+  const why = document.getElementById('w-why').value.trim();
+
+  if (!document.getElementById('w-name').value.trim() || !email || skills.length === 0 || !strength1 || !goal || !why) {
+    alert('Fill out the required fields so we can give you an honest match.');
+    return;
+  }
+
+  let score = 0;
+  score += Math.min(years * 2.5, 25);
+  score += Math.min(skills.length * 2, 20);
+  score += [strength1, strength2, strength3].filter(s => s).length * 5;
+  score += { 'full-time': 18, 'freelance': 16, 'cofounder': 22, 'explore': 10 }[goal] || 0;
+  score += Math.min(why.length / 8, 20);
+  score = Math.min(Math.round(score), 99);
+
+  let title, msg;
+  if (score >= 80) {
+    title = `${name}, you're a strong federation candidate.`;
+    msg = `Your skills, experience, and orientation toward worker ownership are exactly what the federation is built for. <strong>We'd like to fast-track you onto the next onboarding cohort.</strong>`;
+  } else if (score >= 60) {
+    title = `${name}, you're a real fit.`;
+    msg = `You bring meaningful skill and a values orientation that maps to what we're building. We'll connect you with member companies that match your strengths within two weeks.`;
+  } else if (score >= 40) {
+    title = `${name}, there's a path here.`;
+    msg = `You're directionally aligned. The federation isn't a velvet-rope club — it's a network you grow into. Let's start with mentor matching and see where it leads.`;
+  } else {
+    title = `${name}, let's talk first.`;
+    msg = `Your profile suggests you're still figuring some things out, and that's honest information. We'd rather have a conversation about what you actually want before pretending the fit is automatic.`;
+  }
+
+  const goalLabels = {
+    'full-time': 'full-time role at a member company',
+    'freelance': 'project-based freelance work',
+    'cofounder': 'co-founder match for new member coop',
+    'explore': 'network exploration / passive matching'
+  };
+  const detail = `> NAME             ${name}
+> EMAIL            ${email}
+> EXPERIENCE       ${years} year${years === 1 ? '' : 's'}
+> SKILLS           ${skills.length} selected: ${skills.slice(0, 6).join(', ')}${skills.length > 6 ? '...' : ''}
+> CORE STRENGTHS   ${[strength1, strength2, strength3].filter(s => s).join(' / ')}
+> SEEKING          ${goalLabels[goal]}
+> MATCHED PROJECTS ${Math.floor(skills.length * 1.4 + years * 0.5 + 4)} open opportunities
+> MENTOR POOL      ${Math.min(skills.length + 3, 14)} potential mentors in network`;
+
+  document.getElementById('w-score').textContent = score + '%';
+  document.getElementById('w-title').innerHTML = title;
+  document.getElementById('w-msg').innerHTML = msg;
+  document.getElementById('w-detail').textContent = detail;
+  document.getElementById('w-result').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('w-bar').style.width = score + '%';
+  }, 100);
+  document.getElementById('w-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ============================================================
+// FOUNDER MATCH SUBMIT
+// ============================================================
+document.getElementById('f-submit').addEventListener('click', () => {
+  const name = document.getElementById('f-name').value.trim() || 'founder';
+  const email = document.getElementById('f-email').value.trim();
+  const company = document.getElementById('f-company').value.trim() || 'your company';
+  const what = document.getElementById('f-what').value.trim();
+  const structure = document.querySelector('input[name="f-structure"]:checked')?.value;
+  const benefits = Array.from(document.querySelectorAll('#f-benefits input:checked')).map(i => i.value);
+  const ops = Array.from(document.querySelectorAll('#f-ops input:checked')).map(i => i.value);
+  const stage = document.querySelector('input[name="f-stage"]:checked')?.value;
+  const size = parseInt(document.getElementById('f-size').value);
+
+  if (!document.getElementById('f-name').value.trim() || !email || !what || !structure || benefits.length === 0 || ops.length === 0 || !stage) {
+    alert('Fill out all required fields so we can give you an honest match.');
+    return;
+  }
+
+  let score = 0;
+  score += { 'idea': 16, 'mvp': 22, 'growth': 24, 'transition': 26 }[stage] || 0;
+  score += { 'coop': 18, 'federation': 24, 'both': 22, 'unsure': 14 }[structure] || 0;
+  score += Math.min(benefits.length * 1.5, 18);
+  score += Math.min(ops.length * 1.2, 22);
+  score += Math.min(what.length / 6, 12);
+  score = Math.min(Math.round(score), 99);
+
+  let pkg, pkgPrice;
+  if (size <= 5) { pkg = 'Foothold'; pkgPrice = '$1,850/mo'; }
+  else if (size <= 20) { pkg = 'Groundwork'; pkgPrice = '$4,900/mo'; }
+  else { pkg = 'Forge'; pkgPrice = '$11,500/mo'; }
+
+  let title, msg;
+  if (score >= 80) {
+    title = `<span class="gold">${company}</span> belongs in the federation.`;
+    msg = `Your stage, structure preference, and operational needs align directly with what the federation was built for. <strong>We recommend the ${pkg} package (${pkgPrice}) and a 30-minute founder call within the next two weeks.</strong>`;
+  } else if (score >= 60) {
+    title = `Strong match for <span class="gold">${company}</span>.`;
+    msg = `You're the kind of founder this federation was built for. The ${pkg} package (${pkgPrice}) fits your stage. We'll send onboarding materials within 48 hours of your call.`;
+  } else if (score >= 40) {
+    title = `There's a path for <span class="gold">${company}</span>.`;
+    msg = `You're thinking about the right things. Cooperative structure works best when founders are committed to worker ownership in principle, even if practical steps come later. Start with the ${pkg} package and we'll evolve from there.`;
+  } else {
+    title = `<span class="gold">${name}</span>, let's have an honest conversation.`;
+    msg = `Your company might benefit from cooperative support, but values alignment needs to be real. We don't sign up founders who see us as a vendor. We sign up founders who see workers as equals. Let's see if that's you.`;
+  }
+
+  const structureLabels = {
+    'coop': 'Single worker cooperative',
+    'federation': 'Federation member coop',
+    'both': 'Phased — coop now, federate later',
+    'unsure': 'Needs structural guidance'
+  };
+  const stageLabels = {
+    'idea': 'Pre-launch / idea phase',
+    'mvp': 'MVP / early traction',
+    'growth': 'Revenue & growth',
+    'transition': 'Established · transitioning'
+  };
+
+  const detail = `> FOUNDER          ${name}
+> COMPANY          ${company}
+> EMAIL            ${email}
+> TEAM SIZE        ${size} person${size === 1 ? '' : 's'}
+> STAGE            ${stageLabels[stage]}
+> STRUCTURE        ${structureLabels[structure]}
+> BENEFITS WANTED  ${benefits.length} selected: ${benefits.slice(0, 4).join(', ')}${benefits.length > 4 ? '...' : ''}
+> OPS REQUESTED    ${ops.length} selected: ${ops.slice(0, 4).join(', ')}${ops.length > 4 ? '...' : ''}
+> AI TOOL SUPPORT  ${ops.includes('AI tool creation') ? 'YES — included in package' : 'Not requested'}
+> SCALING SUPPORT  ${ops.includes('Scaling support') ? 'YES — assigned scaling consultant' : 'Available on request'}
+> FRACTIONAL EXEC  ${ops.filter(o => o.startsWith('Fractional')).length} executive roles
+> PACKAGE          ${pkg} (${pkgPrice})
+> FOUNDER TIME FREED ~${Math.min(ops.length * 3 + 4, 35)} hrs/week`;
+
+  document.getElementById('f-score').textContent = score + '%';
+  document.getElementById('f-title').innerHTML = title;
+  document.getElementById('f-msg').innerHTML = msg;
+  document.getElementById('f-detail').textContent = detail;
+  document.getElementById('f-result').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('f-bar').style.width = score + '%';
+  }, 100);
+  document.getElementById('f-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+
+</body>
+</html>
